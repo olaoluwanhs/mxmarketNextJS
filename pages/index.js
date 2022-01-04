@@ -1,7 +1,7 @@
 import { Fragment } from "react/cjs/react.development"
 import Link from "next/link"
-import Navbar from "./components/navBar"
-import Footer from "./components/footer"
+import Navbar from "../components/navBar"
+import Footer from "../components/footer"
 // 
 export default function Home() {
   return (

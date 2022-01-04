@@ -1,7 +1,7 @@
 // Varaibles
 $mxPurple: #6a0389;
 $mxOrange: #ff8234;
-$font-monsorat: 'Montserrat', sans-serif;
+$font-monsorat: "Montserrat", sans-serif;
 
 // Mixins
 @mixin patternBg {
@@ -14,22 +14,6 @@ $font-monsorat: 'Montserrat', sans-serif;
   min-width: 100vw;
   min-height: 100vh;
   padding: 1rem 0.5rem;
-}
-
-// buttons
-@mixin mx-btn($background) {
-  box-shadow: inset -2px -2px 4px rgba($color: #222, $alpha: 0.6),
-    inset 2px 2px 4px rgba($color: #ddd, $alpha: 0.6);
-  background-color: $background;
-  &:hover {
-    background-color: lighten($color: $background, $amount: 19%);
-  }
-}
-.btn-purple {
-  @include mx-btn($mxPurple);
-}
-.btn-orange {
-  @include mx-btn($mxOrange);
 }
 
 // cursor pointer
