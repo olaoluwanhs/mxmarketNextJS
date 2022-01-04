@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap");
+@import "variables";
+@import "imgSizes";
+@import "backgrounds";
+@import "nav";
+
+* {
+  font-family: $font-monsorat;
+  font-weight: 400;
+  font-style: bold;
+}
+
+.bodyDiv {
+  @include bodyDiv;
+}

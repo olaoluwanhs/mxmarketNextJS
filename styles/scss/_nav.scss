@@ -1,0 +1,22 @@
+nav {
+  width: 100vw;
+  height: 8vh;
+  // background: #;
+}
+.nav-list {
+  list-style: none;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-links {
+  color: $mxPurple;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 120%;
+  //
+  &:hover {
+    color: $mxOrange;
+  }
+}
