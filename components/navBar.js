@@ -4,17 +4,21 @@ import { useRef, useState } from "react";
 import AccountMenu from "./accountMenu";
 
 // Footer
-export default function Navbar() {
+export default function Navbar({
+    loggedInState,
+    setLoggedInState
+}) {
     // 
     const [hamburgerState, setHamburgerState] =useState("")
     const [accountMenuState, setAccountMenuState] = useState("hidden");
+
     // 
     let hamburgerMenu = useRef();
     let smNav =useRef();
     let accountMenuBtn =useRef();
     // 
     let onClickHamburger = ()=>{
-        // console.log(hamburgerMenu)
+        // 
         switch (hamburgerState) {
             case "":
                 smNav.current.style.transform ="translateY(107vh)"
@@ -59,15 +63,6 @@ export default function Navbar() {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-
     // Returned jsx
     return(
         <Fragment>
@@ -133,7 +128,7 @@ export default function Navbar() {
             </nav>
 
         {/* Account Menus */}
-        <AccountMenu accountMenuState={accountMenuState} setAccountMenuState={setAccountMenuState}/>
+        <AccountMenu accountMenuState={accountMenuState} setAccountMenuState={setAccountMenuState} loggedInState={loggedInState}/>
         {/* Navigation links small screen */}
         <div className="sm-nav flex-column align-items-center bg-light shadow" ref={smNav}>
         <ul className="d-flex flex-column justify-content-evenly nav-list">

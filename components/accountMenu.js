@@ -1,19 +1,19 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import Link from "next/link";
 
 
-export default function AccountMenu({accountMenuState, setAccountMenuState}){
-    let [loggedInState, setLoggedInState] = useState(false);
+export default function AccountMenu({accountMenuState, setAccountMenuState, loggedInState}){
     let accountMenu = useRef()
     useEffect(()=>{
-        console.log(accountMenu);
+        // console.log(accountMenu);
         if(accountMenuState == "hidden"){
             accountMenu.current.style.display ="none";
         }else if(accountMenuState == "shown"){
             accountMenu.current.style.display = "flex";
         }
-    },[accountMenuState])
-
+        // console.log(loggedInState)
+    },[accountMenuState, loggedInState])
+    
     switch (loggedInState) {
         case false:
             return(
@@ -26,8 +26,8 @@ export default function AccountMenu({accountMenuState, setAccountMenuState}){
                         </Link>
                 </div>
                 )
-            break;
-        case true:
+                break;
+                case true:
                     return(
                         <div className="shadow account-menu py-2" ref={accountMenu}>
                         <Link href="/">
@@ -36,7 +36,7 @@ export default function AccountMenu({accountMenuState, setAccountMenuState}){
                         <Link href="/">
                             <span className="btn-hover-orange pointer account-menu-link">Listing</span>
                         </Link>
-                        <Link href="/">
+                        <Link href="/profile/createListing">
                             <span className="btn-hover-orange pointer account-menu-link">Create Listing</span>
                         </Link>
                         <Link href="/">
@@ -49,12 +49,12 @@ export default function AccountMenu({accountMenuState, setAccountMenuState}){
                     )
             break;
     
-        default:
+            default:
             return(
                 <div className="shadow account-menu py-2" ref={accountMenu}>
                     <h5>An error has occured</h5>
                 </div>
             )
             break;
-    }
+        }
 }
