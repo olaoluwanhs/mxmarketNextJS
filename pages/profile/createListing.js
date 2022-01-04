@@ -1,5 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import Navbar from "../../components/navBar";
+import { loggedIn, loggedInContext, LoggedInContextProvider } from "../../context/loggedInContext"
+
 
 // SUBCATEGORY INPUT
 function Subcategory({category}){
@@ -131,11 +133,13 @@ export default function CreateListingForm(){
     },[category])
     // 
     return(
+            <LoggedInContextProvider>
         <Fragment>
+
             <Navbar/>
             {/* Create Listing Form */}
             <div className="d-flex flex-column align-items-center justify-content-evenly mt-5 px-3">
-            <h1 className="h1 my-4">Create A new Listing</h1>
+            <h1 className="h1 my-4">Create a new Listing</h1>
                 {/*  */}
                 <form action="/" method="get">
                     {/* Select the category */}
@@ -158,6 +162,8 @@ export default function CreateListingForm(){
                 {/*  */}
             </div>
         </Fragment>
+        </LoggedInContextProvider>
+ 
     )
 }
 

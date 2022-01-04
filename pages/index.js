@@ -2,15 +2,21 @@ import { Fragment, useState} from "react"
 import Link from "next/link"
 import Navbar from "../components/navBar"
 import Footer from "../components/footer"
+import { loggedIn, loggedInContext, LoggedInContextProvider } from "../context/loggedInContext"
 // 
+
 export default function Home() {
-  const [loggedInState, setLoggedInState] = useState(true);
+// 
+
   return (
     <Fragment>
-      <Navbar loggedInState={loggedInState} setLoggedInState={setLoggedInState}/>
+      <LoggedInContextProvider> 
+      <Navbar />
       {/*  */}
       {/*  */}
       <Footer/>
+      </LoggedInContextProvider>
+
     </Fragment>
   )
 }

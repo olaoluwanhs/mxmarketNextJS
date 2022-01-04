@@ -1,12 +1,11 @@
 import { Fragment } from "react/cjs/react.production.min";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
+import { loggedInContext } from "../context/loggedInContext";
 import AccountMenu from "./accountMenu";
 
 // Footer
 export default function Navbar({
-    loggedInState,
-    setLoggedInState
 }) {
     // 
     const [hamburgerState, setHamburgerState] =useState("")
@@ -16,6 +15,8 @@ export default function Navbar({
     let hamburgerMenu = useRef();
     let smNav =useRef();
     let accountMenuBtn =useRef();
+    let {loggedInState, setLoggedInstate} = useContext(loggedInContext)
+
     // 
     let onClickHamburger = ()=>{
         // 

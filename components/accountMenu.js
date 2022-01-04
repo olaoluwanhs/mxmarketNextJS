@@ -17,7 +17,7 @@ export default function AccountMenu({accountMenuState, setAccountMenuState, logg
     switch (loggedInState) {
         case false:
             return(
-                <div className="shadow account-menu py-2" ref={accountMenu}>
+                <div className="shadow account-menu py-2 bg-light" ref={accountMenu}>
                         <Link href="/login">
                             <span className="btn-hover-orange pointer account-menu-link">Login</span>
                         </Link>
@@ -29,7 +29,7 @@ export default function AccountMenu({accountMenuState, setAccountMenuState, logg
                 break;
                 case true:
                     return(
-                        <div className="shadow account-menu py-2" ref={accountMenu}>
+                        <div className="shadow account-menu py-2 bg-light" ref={accountMenu}>
                         <Link href="/">
                             <span className="btn-hover-orange pointer account-menu-link">Overview</span>
                         </Link>
@@ -51,7 +51,7 @@ export default function AccountMenu({accountMenuState, setAccountMenuState, logg
     
             default:
             return(
-                <div className="shadow account-menu py-2" ref={accountMenu}>
+                <div className="shadow account-menu py-2 bg-light" ref={accountMenu}>
                     <h5>An error has occured</h5>
                 </div>
             )
