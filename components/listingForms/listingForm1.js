@@ -12,6 +12,7 @@ function Subcategory({category, setSubCategory}){
         housing:["Apartment", "Room mate"],
         academics:["Technical Drawing Equipments", "Stationaries"],
         books:["Gospel","Islamic","Novels","Scientific","Academic"],
+        services:["Digital Services","Repair Services","Teaching Services","Cleaning Services","Laundry Services","Others"],
     }
     // 
     let subCat = useRef();
@@ -30,6 +31,18 @@ function Subcategory({category, setSubCategory}){
                         <option value="">Choose subcategory</option>
                         {/*  */}
                         {subcategoryObjectList.fashion.map((sub)=>{
+                        return <option key={sub} value={sub}>{sub}</option>
+                        })}
+                        {/*  */}
+                    </select>
+                )     
+                break;
+            case "services":
+                return(
+                    <select onChange={handleSubCateChange} ref={subCat} name="listing-subcategory" id="" className="form-control my-1">
+                        <option value="">Choose subcategory</option>
+                        {/*  */}
+                        {subcategoryObjectList.services.map((sub)=>{
                         return <option key={sub} value={sub}>{sub}</option>
                         })}
                         {/*  */}
@@ -169,6 +182,7 @@ export default function ListingForm1({setFormState, setListingPostObj}){
                         <option value="furniture">Furniture</option>
                         <option value="housing">Housing</option>
                         <option value="books">Books</option>
+                        <option value="services">Services</option>
                         <option value="academics">Academic Materials</option>
                     </select>
                     {/* select subcategory */}
