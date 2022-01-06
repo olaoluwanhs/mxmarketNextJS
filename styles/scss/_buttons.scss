@@ -2,8 +2,8 @@
 @mixin mx-btn($background) {
   box-shadow: inset -2px -2px 4px rgba($color: #222, $alpha: 0.6),
     inset 2px 2px 4px rgba($color: #ddd, $alpha: 0.6);
-  background-color: $background;
-  border-color: $background;
+  background-color: $background;  
+  border: none;
   color: #fff;
 
   &:hover {

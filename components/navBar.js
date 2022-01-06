@@ -132,7 +132,7 @@ export default function Navbar({
         <AccountMenu accountMenuState={accountMenuState} setAccountMenuState={setAccountMenuState} loggedInState={loggedInState}/>
         {/* Navigation links small screen */}
         <div className="sm-nav flex-column align-items-center bg-light shadow" ref={smNav}>
-        <ul className="d-flex flex-column justify-content-evenly nav-list">
+        <ul className="d-flex flex-column justify-content-evenly nav-list p-0">
                     <li>
                         <Link href="/">
                             <span className="nav-links pointer">
