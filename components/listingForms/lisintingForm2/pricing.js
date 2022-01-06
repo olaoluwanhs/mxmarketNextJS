@@ -9,7 +9,7 @@ export default function Pricing({priceTypeState}){
             return(
                 <>
                 <label htmlFor="">Price (<strike>N</strike>)</label>
-                <input type="number" placeholder="Price" className="form-control"/>
+                <input type="number"name="price" placeholder="Price" className="form-control"/>
                 </>
             )       
             break;

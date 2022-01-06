@@ -17,18 +17,18 @@ export default function NewListing(){
                 switch (formState) {
                     case 1:
                         return (
-                        <ListingForm1 setFormState={setFormState} setListingPostObj={setListingPostObj}/>
+                        <ListingForm1 listingPostObj={listingPostObj} setFormState={setFormState} setListingPostObj={setListingPostObj}/>
                         )
                         break;
                         case 2:
                             return (
-                                <ListingForm2  setFormState={setFormState} setListingPostObj={setListingPostObj}/>
+                                <ListingForm2  listingPostObj={listingPostObj} setFormState={setFormState} setListingPostObj={setListingPostObj}/>
                                 )
                         break;
                             
                     default:
                         return (
-                            <ListingForm1  setFormState={setFormState} setListingPostObj={setListingPostObj}/>
+                            <ListingForm1  listingPostObj={listingPostObj} setFormState={setFormState} setListingPostObj={setListingPostObj}/>
                             )
                         break;
                 }
