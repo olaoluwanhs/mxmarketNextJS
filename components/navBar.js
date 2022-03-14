@@ -1,7 +1,7 @@
 import { Fragment } from "react/cjs/react.production.min";
 import Link from "next/link";
 import { useRef, useState, useContext } from "react";
-import { loggedInContext } from "../context/loggedInContext";
+import { LoggedInContext } from "../context/loggedInContext";
 import AccountMenu from "./accountMenu";
 
 // Footer
@@ -15,7 +15,7 @@ export default function Navbar({
     let hamburgerMenu = useRef();
     let smNav =useRef();
     let accountMenuBtn =useRef();
-    let {loggedInState, setLoggedInstate} = useContext(loggedInContext)
+    let {loggedInState, setLoggedInState} = useContext(LoggedInContext)
 
     // 
     let onClickHamburger = ()=>{
@@ -129,7 +129,7 @@ export default function Navbar({
             </nav>
 
         {/* Account Menus */}
-        <AccountMenu accountMenuState={accountMenuState} setAccountMenuState={setAccountMenuState} loggedInState={loggedInState}/>
+        <AccountMenu accountMenuState={accountMenuState} setAccountMenuState={setAccountMenuState} loggedInState={loggedInState} setLoggedInState={setLoggedInState}/>
         {/* Navigation links small screen */}
         <div className="sm-nav flex-column align-items-center bg-light shadow" ref={smNav}>
         <ul className="d-flex flex-column justify-content-evenly nav-list p-0">

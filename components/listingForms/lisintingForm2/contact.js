@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useContext } from "react/cjs/react.development"
-import { loggedInContext } from "../../../context/loggedInContext"
+import { LoggedInContext } from "../../../context/loggedInContext"
 
 export default function Contact(){
-    let userInfo = useContext(loggedInContext);
+    let userInfo = useContext(LoggedInContext);
     // console.log(userInfo)
 
     useEffect(()=>{
