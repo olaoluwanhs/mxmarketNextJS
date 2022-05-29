@@ -1,6 +1,7 @@
 // Varaibles
 $mxPurple: #6a0389;
 $mxOrange: #ff8234;
+$mxGrey: #3f3f3f;
 $font-monsorat: "Montserrat", sans-serif;
 
 // Mixins
@@ -14,6 +15,12 @@ $font-monsorat: "Montserrat", sans-serif;
   min-width: 100vw;
   min-height: 100vh;
   padding: 1rem 0.5rem;
+}
+@mixin roundedImage($width) {
+  width: $width;
+  height: $width;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 // cursor pointer
@@ -34,4 +41,10 @@ $font-monsorat: "Montserrat", sans-serif;
 }
 .text-purple {
   color: $mxPurple;
+}
+.font-monserat {
+  font-family: $font-monsorat;
+}
+.bg-grey {
+  background-color: $mxGrey;
 }

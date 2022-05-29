@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useRef } from "react/cjs/react.development";
-import { loginFunction } from "../../context/loggedInContext";
+import { LoggedInContext, loginFunction } from "../../context/loggedInContext";
 import Router from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function SignUp() {
   //
@@ -12,75 +12,74 @@ export default function SignUp() {
   }, [attemptState]);
   //
   let loginForm = useRef();
-  function signUp(e) {
+  let submitBtn = useRef();
+  let loggedIn = useContext(LoggedInContext);
+  //
+  async function signUpFunction(e) {
     let userCreateForm = new FormData(loginForm.current);
     //
     e.preventDefault();
+    submitBtn.current.disabled = true;
+
     let userData = {
-      firstname: userCreateForm.get("firstname"),
-      LastName: userCreateForm.get("lastname"),
-      userName: userCreateForm.get("username"),
+      first_name: userCreateForm.get("firstname"),
+      last_name: userCreateForm.get("lastname"),
+      user_name: userCreateForm.get("username"),
       email: userCreateForm.get("email"),
       location: userCreateForm.get("location"),
       password: userCreateForm.get("password"),
-      confirm: userCreateForm.get("confirm"),
-      phoneNumber: userCreateForm.get("phone-number"),
-      whatsApp: userCreateForm.get("whatsapp-number"),
+      confirm_password: userCreateForm.get("confirm"),
+      phone_number: userCreateForm.get("phone-number"),
+      whatsapp: userCreateForm.get("whatsapp-number"),
     };
-    // console.log(userData);
-    fetch("http://localhost:4000/", {
+    let response = await fetch("http://localhost:4000/users", {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        // console.log(result);
-        loginFunction(result)
-          .then(({ message }) => {
-            switch (message) {
-              case "Password unconfirmed":
-                setAttemptState("password-unconfirmed");
-                break;
-
-              case "Username exists":
-                setAttemptState("username-exists");
-                break;
-
-              case "Email exists":
-                setAttemptState("email-exists");
-                break;
-
-              case "Error addding user":
-                setAttemptState("error-adding-user");
-                break;
-
-              case "Phone number exists":
-                setAttemptState("phone-number-exists");
-                break;
-
-              case "Whatsapp number exists":
-                setAttemptState("whatsapp-number-exists");
-                break;
-
-              case "Logged in":
-                Router.replace(`profile/${userData.userName}`);
-                break;
-
-              default:
-                setAttemptState("unknown-error");
-                break;
-            }
-          })
-          .catch((err) => {
-            setAttemptState("unknown-error");
-          });
+    });
+    response = await response.json();
+    //
+    if (response.error) {
+      submitBtn.current.disabled = false;
+      return setAttemptState(
+        response.error.message || response.error.errors[0].message
+      );
+    }
+    // console.log(response);
+    if (response.userType == "user") {
+      loginFunction({
+        user_name: response.user_name,
+        password: userData.password,
+      }).then((userInfo) => {
+        setAttemptState("Success");
+        loggedIn.setLoggedInState({ loggedIn: true, user: userInfo });
+        // console.log(userInfo);
+        Router.replace(`../profile/${userInfo.user_name}`);
       });
+    }
   }
 
   //
   return (
     <div className="bodyDiv patternBg">
+      {/* Bootstrap error */}
+      {attemptState !== "none" && attemptState !== "Success" && (
+        <div
+          className="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <span>{attemptState}</span>
+        </div>
+      )}
+      {attemptState == "Success" && (
+        <div
+          className="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <span>{attemptState}</span>
+        </div>
+      )}
+      {/*  */}
       <div className="d-flex container flex-column rounded py-3 align-items-center">
         <img src="/logo.png" alt="" className="form-logo" />
         <form className="d-flex flex-column my-5" ref={loginForm}>
@@ -150,8 +149,9 @@ export default function SignUp() {
           />
           <button
             onClick={(e) => {
-              signUp(e);
+              signUpFunction(e);
             }}
+            ref={submitBtn}
             className="btn-orange btn btn-lg text-light my-2"
           >
             Login

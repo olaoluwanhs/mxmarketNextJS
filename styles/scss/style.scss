@@ -1,3 +1,4 @@
+@import "breakpoint";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap");
 @import "variables";
 @import "imgSizes";
@@ -10,6 +11,9 @@
   font-family: $font-monsorat;
   font-weight: 400;
   font-style: bold;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .bodyDiv {

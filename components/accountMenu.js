@@ -8,7 +8,7 @@ export default function AccountMenu({
 }) {
   let accountMenu = useRef();
   useEffect(() => {
-    // console.log(accountMenu);
+    // console.log(loggedInState);
     if (accountMenuState == "hidden") {
       accountMenu.current.style.display = "none";
     } else if (accountMenuState == "shown") {
@@ -18,7 +18,13 @@ export default function AccountMenu({
   }, [accountMenuState, loggedInState]);
 
   function logOut() {
-    setLoggedInState(false);
+    // Set logged in state  to false
+    setLoggedInState({
+      loggedIn: false,
+      user: {},
+    });
+    // Clear local storage
+    localStorage.removeItem("mxLoggedInUser");
   }
 
   switch (loggedInState.loggedIn) {
@@ -41,7 +47,9 @@ export default function AccountMenu({
     case true:
       return (
         <div className="shadow account-menu py-2 bg-light" ref={accountMenu}>
-          <Link href="/">
+          <Link
+            href={`http://localhost:3000/profile/${loggedInState.user.user_name}`}
+          >
             <span className="btn-hover-orange pointer account-menu-link">
               Overview
             </span>
