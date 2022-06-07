@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import Link from "next/link";
+import Router from "next/router";
 
 export default function AccountMenu({
   accountMenuState,
@@ -15,16 +16,34 @@ export default function AccountMenu({
       accountMenu.current.style.display = "flex";
     }
     // console.log(loggedInState)
-  }, [accountMenuState, loggedInState]);
+  }, [accountMenuState]);
+  //
+  // let j = useRef(0);
+  // useEffect(() => {
+  //   if (j.current >= 1) {
+  //     if (loggedInState.loggedIn != true) {
+  //       // setTimeout(() => {
+  //       // Router.replace("/");
+  //       // }, 500);
+  //     }
+  //   }
+  //   j.current = j.current + 1;
+  // }, [loggedInState]);
 
-  function logOut() {
-    // Set logged in state  to false
-    setLoggedInState({
-      loggedIn: false,
-      user: {},
-    });
+  async function logOut() {
     // Clear local storage
-    localStorage.removeItem("mxLoggedInUser");
+    const loggedOut = await fetch("http://localhost:4000/logout", {
+      method: "get",
+      credentials: "include",
+    });
+    const response = await loggedOut.json();
+    if (response.messge == "logged Out") {
+      // Set logged in state  to false
+      setLoggedInState({
+        loggedIn: false,
+        user: {},
+      });
+    }
   }
 
   switch (loggedInState.loggedIn) {
@@ -54,24 +73,21 @@ export default function AccountMenu({
               Overview
             </span>
           </Link>
-          <Link href="/">
-            <span className="btn-hover-orange pointer account-menu-link">
-              Listing
-            </span>
-          </Link>
           <Link href="/profile/createListing">
             <span className="btn-hover-orange pointer account-menu-link">
               Create Listing
             </span>
           </Link>
-          <Link href="/">
+          <Link href="/account-details">
             <span className="btn-hover-orange pointer account-menu-link">
               Account Details
             </span>
           </Link>
           <Link href="/">
             <span
-              onClick={logOut}
+              onClick={() => {
+                logOut();
+              }}
               className="btn-hover-orange pointer account-menu-link"
             >
               Log out

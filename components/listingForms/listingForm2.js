@@ -22,6 +22,7 @@ export default function ListingForm2({
   let [priceTypeState, setPriceTypeState] = useState("price");
   let [imageError, setImageError] = useState(false);
   let [successState, setSuccessState] = useState(false);
+  const [attemptState, setAttemptState] = useState("none");
 
   function returnToChangeCategory() {
     setFormState(1);
@@ -31,55 +32,52 @@ export default function ListingForm2({
   }
   function handleListingCreation(e) {
     e.preventDefault();
+    e.target.disabled = true;
     //
     let formData = new FormData(form2.current);
     let listingsObj = {
       category: listingPostObj.category,
-      subCategory: listingPostObj.subCategory,
+      sub_category: listingPostObj.subCategory,
       title: formData.get("title"),
       slug: formData.get("title").toLocaleLowerCase().replace(/ /g, "-"),
-      author: loggedInState.user.user_id,
-      priceType: formData.get("pricingType"),
+      author: loggedInState.user.id,
+      price_type: formData.get("pricingType"),
       price: formData.get("price"),
       description: formData.get("description"),
-      images: formData.get("images"),
-      phone: formData.get("phone"),
-      whatsapp: formData.get("whatsapp"),
-      email: formData.get("email"),
+      // images: formData.get("images"),
     };
     //   Router.push("/");
     (async () => {
       //
       //
-      let { message, result } = await submitFormData(listingsObj);
-      if (message == "success") {
-        console.log(message);
-        console.log(result);
-        // Display successfull and then route to the product's page
-        setSuccessState(true);
-        setTimeout(() => {
-          Router.replace(`/listing/${listingsObj.slug}`);
-        }, 1000);
-        //
-      } else {
-        console.log(error);
+      let result = await submitFormData(listingsObj);
+      if (result.error) {
+        e.target.disabled = false;
+        return setAttemptState(result.error.errors[0].message);
       }
+      setAttemptState("Success");
+      console.log(result);
+      Router.replace(`/listing/${result.slug}`);
+      // }
     })();
   }
 
   async function submitFormData(obj) {
     let result = new Promise(async (resolve, reject) => {
       try {
-        let response = await fetch("http://localhost:4000/listings", {
+        let response = await fetch("http://localhost:4000/listing", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify(obj),
         });
         // Post request to submit form
         response = await response.json();
-        resolve({ message: "success", result: response });
+        //
+
+        resolve(response);
       } catch (error) {
-        resolve({ message: "Error", result: error });
+        resolve(error);
       }
     });
     return result;
@@ -136,9 +134,7 @@ export default function ListingForm2({
           />
           <hr />
           {/*  */}
-          <LoggedInContextProvider>
-            <Contact />
-          </LoggedInContextProvider>
+          <LoggedInContextProvider>{/* <Contact /> */}</LoggedInContextProvider>
           {/*  */}
           <button
             onClick={(e) => {
@@ -151,6 +147,24 @@ export default function ListingForm2({
           {successState == true && (
             <p className="alert alert-success">Added successfully</p>
           )}
+          {/* Bootstrap error */}
+          {attemptState !== "none" && attemptState !== "Success" && (
+            <div
+              className="alert alert-danger alert-dismissible fade show"
+              role="alert"
+            >
+              <span>{attemptState}</span>
+            </div>
+          )}
+          {attemptState == "Success" && (
+            <div
+              className="alert alert-success alert-dismissible fade show"
+              role="alert"
+            >
+              <span>{attemptState}</span>
+            </div>
+          )}
+          {/*  */}
         </form>
         {/*  */}
       </div>

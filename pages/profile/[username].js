@@ -27,7 +27,7 @@ export function checkLocation(input) {
 export default function profile({ message, profile }) {
   //Check if there is a logged In user
   // Logged in context
-  let { setLoggedInState } = useContext(LoggedInContext);
+  let { setLoggedInState, loggedInState } = useContext(LoggedInContext);
   // Profile page state management
   let [profilePageState, setProfilePageState] = useState("Listings");
   //
@@ -101,30 +101,38 @@ export default function profile({ message, profile }) {
         >
           Listings
         </span>
-        <span
-          onClick={(e) => handleSetState("Orders", e)}
-          className="btn-purple btn btn-md"
-        >
-          Orders
-        </span>
-        <span
-          onClick={(e) => handleSetState("Blog", e)}
-          className="btn-purple btn btn-md"
-        >
-          Blog Post
-        </span>
-        <span
-          onClick={(e) => handleSetState("Affiliate", e)}
-          className="btn-purple btn btn-md"
-        >
-          Affiliate products
-        </span>
-        <span
+        {message == "request-owns-profile" && (
+          <span
+            onClick={(e) => handleSetState("Orders", e)}
+            className="btn-purple btn btn-md"
+          >
+            Orders
+          </span>
+        )}
+        {loggedInState.loggedIn == true &&
+          loggedInState.user.userType == "admin" &&
+          loggedInState.user.id == profile.id && (
+            <>
+              <span
+                onClick={(e) => handleSetState("Blog", e)}
+                className="btn-purple btn btn-md"
+              >
+                Blog Post
+              </span>
+              <span
+                onClick={(e) => handleSetState("Affiliate", e)}
+                className="btn-purple btn btn-md"
+              >
+                Affiliate products
+              </span>
+            </>
+          )}
+        {/* <span
           onClick={(e) => handleSetState("categories", e)}
           className="btn-purple btn btn-md"
         >
           Categories
-        </span>
+        </span> */}
       </div>
 
       {/*  */}

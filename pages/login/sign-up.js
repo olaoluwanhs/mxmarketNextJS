@@ -8,7 +8,7 @@ export default function SignUp() {
   //
   const [attemptState, setAttemptState] = useState("none");
   useEffect(() => {
-    console.log(attemptState);
+    // console.log(attemptState);
   }, [attemptState]);
   //
   let loginForm = useRef();

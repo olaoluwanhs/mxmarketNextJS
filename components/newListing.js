@@ -4,7 +4,6 @@ import { LoggedInContext } from "../context/loggedInContext";
 import { lisitingFormParams } from "../pages/profile/createListing";
 import ListingForm1 from "./listingForms/listingForm1";
 import ListingForm2 from "./listingForms/listingForm2";
-import Router from "next/router";
 
 export default function NewListing() {
   let { listingPostObj, setListingPostObj, formState, setFormState } =
@@ -12,13 +11,8 @@ export default function NewListing() {
   let ListingFormValues = useContext(lisitingFormParams);
   let { loggedInState, setLoggedInState } = useContext(LoggedInContext);
   //
-  useEffect(() => {
-    setLoggedInState(checkUser());
-    // console.log(loggedInState);
-    if (loggedInState.user.user_id == undefined) {
-      Router.replace("/");
-    }
-  }, [formState]);
+
+  useEffect(() => {}, [formState]);
   //
 
   switch (formState) {

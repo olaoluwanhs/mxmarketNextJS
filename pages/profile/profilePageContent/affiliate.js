@@ -20,6 +20,7 @@ export default function Affiliate({ profilePageState }) {
         link: formData.get("link"),
         description: formData.get("description"),
         pictures: formData.get("pictures"),
+        price: formData.get("price"),
       };
       //
       console.log(affiliatePost);
@@ -85,6 +86,13 @@ export default function Affiliate({ profilePageState }) {
             name="link"
             className="form-control my-1"
             placeholder="Affiliate link"
+          />
+          <label htmlFor="price">Price</label>
+          <input
+            type="number"
+            name="price"
+            className="form-control my-1"
+            placeholder="(N) Price"
           />
           <label htmlFor="description">Pictures</label>
           <input
