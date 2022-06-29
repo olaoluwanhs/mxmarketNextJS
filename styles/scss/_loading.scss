@@ -1,0 +1,33 @@
+.loading-image{
+    width: 100px;
+    height: 100px;
+    // 
+    animation-name: loading;
+    animation-duration: 2s;
+    animation-timing-function: alternate;
+    animation-iteration-count: infinite;
+}
+.loading-background{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(209, 209, 209, 0.647);
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 30;
+}
+
+@keyframes loading {
+    0%{
+        opacity: 0.4;
+        transform: scale(80%,80%)
+    }
+    50%{
+        opacity: 1;
+        transform: scale(100%,100%);
+    }
+    100%{
+        opacity: 0.4;
+        transform: scale(80%,80%)
+    }
+}

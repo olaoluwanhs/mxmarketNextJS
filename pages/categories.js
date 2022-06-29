@@ -98,7 +98,9 @@ export function CategorySection({ fontSizes, divClasses }) {
                   transition: "0.3s",
                 }}
               ></i>
-              <h5 style={{ fontSize: "50%" }}>Furniture</h5>
+              <h5 style={{ fontSize: "90%", fontWeight: "bolder" }}>
+                Furniture
+              </h5>
             </div>
           </Link>
         </div>

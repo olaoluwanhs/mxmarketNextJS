@@ -1,24 +1,17 @@
 import Router from "next/router";
 import { Fragment, useContext, useRef, useState } from "react";
-import checkUser from "../../context/checkUser";
-import {
-  LoggedInContext,
-  LoggedInContextProvider,
-} from "../../context/loggedInContext";
-import Contact from "./lisintingForm2/contact";
+import { LoggedInContext } from "../../context/loggedInContext";
+import { uploadImages } from "../imageUpload";
 import Pricing from "./lisintingForm2/pricing";
 import ProductImages from "./lisintingForm2/uploadImages";
 
-export default function ListingForm2({
-  setFormState,
-  setListingPostObj,
-  listingPostObj,
-}) {
+export default function ListingForm2({ setFormState, listingPostObj }) {
   //
-  let { loggedInState, setLoggedInState } = useContext(LoggedInContext);
+  let { loggedInState } = useContext(LoggedInContext);
   //
   let priceType = useRef();
   let form2 = useRef();
+  const [imageRef, setImageRef] = useState();
   let [priceTypeState, setPriceTypeState] = useState("price");
   let [imageError, setImageError] = useState(false);
   let [successState, setSuccessState] = useState(false);
@@ -30,11 +23,18 @@ export default function ListingForm2({
   function handlePriceTypeChange() {
     setPriceTypeState(priceType.current.value);
   }
-  function handleListingCreation(e) {
+  async function handleListingCreation(e) {
     e.preventDefault();
     e.target.disabled = true;
+    const imageName = await uploadImages(imageRef.current.files);
     //
+    if (imageName.error) {
+      console.log(imageName);
+      setAttemptState(imageName.error.message);
+      return;
+    }
     let formData = new FormData(form2.current);
+    //
     let listingsObj = {
       category: listingPostObj.category,
       sub_category: listingPostObj.subCategory,
@@ -44,11 +44,11 @@ export default function ListingForm2({
       price_type: formData.get("pricingType"),
       price: formData.get("price"),
       description: formData.get("description"),
-      // images: formData.get("images"),
+      images: imageName.names,
     };
     //   Router.push("/");
     (async () => {
-      //
+      // console.log(listingsObj);
       //
       let result = await submitFormData(listingsObj);
       if (result.error) {
@@ -56,9 +56,8 @@ export default function ListingForm2({
         return setAttemptState(result.error.errors[0].message);
       }
       setAttemptState("Success");
-      console.log(result);
+      // console.log(result);
       Router.replace(`/listing/${result.slug}`);
-      // }
     })();
   }
 
@@ -131,10 +130,9 @@ export default function ListingForm2({
           <ProductImages
             imageError={imageError}
             setImageError={setImageError}
+            setImageRef={setImageRef}
           />
           <hr />
-          {/*  */}
-          <LoggedInContextProvider>{/* <Contact /> */}</LoggedInContextProvider>
           {/*  */}
           <button
             onClick={(e) => {

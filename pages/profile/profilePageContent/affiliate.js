@@ -19,7 +19,11 @@ export default function Affiliate({ profilePageState }) {
         title: formData.get("title"),
         link: formData.get("link"),
         description: formData.get("description"),
-        pictures: formData.get("pictures"),
+        pictures: (() => {
+          let links = formData.get("pictures");
+          links = links.split(",");
+          return JSON.stringify(links);
+        })(),
         price: formData.get("price"),
       };
       //
@@ -95,6 +99,14 @@ export default function Affiliate({ profilePageState }) {
             placeholder="(N) Price"
           />
           <label htmlFor="description">Pictures</label>
+          <br />
+          <a
+            href="http://localhost:4000/images"
+            target={"_blank"}
+            className="btn btn-md btn-primary"
+          >
+            Upload image
+          </a>
           <input
             type="text"
             name="pictures"

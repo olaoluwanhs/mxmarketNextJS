@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import Link from "next/link";
-import Router from "next/router";
+// import Router from "next/router";
 
 export default function AccountMenu({
   accountMenuState,
@@ -18,17 +18,6 @@ export default function AccountMenu({
     // console.log(loggedInState)
   }, [accountMenuState]);
   //
-  // let j = useRef(0);
-  // useEffect(() => {
-  //   if (j.current >= 1) {
-  //     if (loggedInState.loggedIn != true) {
-  //       // setTimeout(() => {
-  //       // Router.replace("/");
-  //       // }, 500);
-  //     }
-  //   }
-  //   j.current = j.current + 1;
-  // }, [loggedInState]);
 
   async function logOut() {
     // Clear local storage
@@ -37,7 +26,7 @@ export default function AccountMenu({
       credentials: "include",
     });
     const response = await loggedOut.json();
-    if (response.messge == "logged Out") {
+    if (response.message == "logged Out") {
       // Set logged in state  to false
       setLoggedInState({
         loggedIn: false,

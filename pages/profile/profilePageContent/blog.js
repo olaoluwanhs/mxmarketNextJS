@@ -73,7 +73,7 @@ export default function PostBlog({ profilePageState }) {
           Select featured image
         </label>
         <a
-          href="#"
+          href="http://localhost:4000/images"
           target="_blank"
           className="btn btn-primary btn-lg col-12 text-light shadow my-2"
         >

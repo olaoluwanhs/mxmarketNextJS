@@ -23,7 +23,7 @@ export function Product({ e }) {
       className="card shadow-lg rounded overflow-hidden mx-2"
       style={{ minWidth: "15rem" }}
     >
-      <img src="/unsplash.jpg" alt="" className="card-image" />
+      <img src={JSON.parse(e.pictures)[0]} alt="" className="card-image" />
       <div className="card-body" style={{ height: "fit-content" }}>
         <h3>{e.title}</h3>
         <h5>
@@ -31,7 +31,7 @@ export function Product({ e }) {
           {e.price}
         </h5>
         <Link href={`/affiliate/${e.id}`}>
-          <button className="btn btn-purple">Details</button>
+          <button className="btn btn-orange">Details</button>
         </Link>
       </div>
     </div>

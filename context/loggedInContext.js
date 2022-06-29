@@ -30,7 +30,7 @@ export async function loginFunction(obj) {
     }
   );
   let result = await res.json();
-  localStorage.setItem("mxLoggedInUser", JSON.stringify(result));
+  // localStorage.setItem("mxLoggedInUser", JSON.stringify(result));
   // console.log(result);
   return result;
 }

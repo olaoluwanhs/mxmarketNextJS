@@ -56,7 +56,11 @@ export default function profile({ message, profile }) {
         <div className="bg-dark-overlay full-width-container d-flex align-items-center justify-content-evenly px-2">
           {/* Profile picture */}
           <div className="profile-image shadow-lg">
-            <img src={profile.image || "/logo.png"} alt="profile-img" />
+            {/* {console.log(typeof profile)} */}
+            <img
+              src={`${profile.image ? `${profile.image}` : "/unsplash.jpg"}`}
+              alt="profile-img"
+            />
           </div>
           {/* Profile details */}
           <div className="profile-details d-flex flex-column justify-content-center">
@@ -88,19 +92,29 @@ export default function profile({ message, profile }) {
               <i className="fa fa-lg fa-map-marker-alt mx-3"></i>
               <span>{checkLocation(profile.location)}</span>
             </div>
+            {message == "request-owns-profile" && (
+              <div className="text-light">
+                <i className="fas fa-lg fa-money-bill-wave mx-3"></i>
+                <span>
+                  <strike>N</strike>
+                  {profile.wallet}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
       {/* Profile section buttons*/}
       {/*  */}
 
-      <div className="bg-grey p-2 sticky-header d-flex align-items-center justify-content-evenly shadow">
+      <div className="bg-light p-2 sticky-header d-flex align-items-center justify-content-evenly shadow-lg">
         <span
           onClick={(e) => handleSetState("Listings", e)}
           className="btn-orange btn btn-md"
         >
           Listings
         </span>
+        {/* {console.log(message)} */}
         {message == "request-owns-profile" && (
           <span
             onClick={(e) => handleSetState("Orders", e)}
@@ -117,27 +131,21 @@ export default function profile({ message, profile }) {
                 onClick={(e) => handleSetState("Blog", e)}
                 className="btn-purple btn btn-md"
               >
-                Blog Post
+                Blog
               </span>
               <span
                 onClick={(e) => handleSetState("Affiliate", e)}
                 className="btn-purple btn btn-md"
               >
-                Affiliate products
+                Affiliate
               </span>
             </>
           )}
-        {/* <span
-          onClick={(e) => handleSetState("categories", e)}
-          className="btn-purple btn btn-md"
-        >
-          Categories
-        </span> */}
       </div>
 
       {/*  */}
       {/* Profile Section */}
-      <ProfileContent profilePageState={profilePageState} />
+      <ProfileContent profilePageState={profilePageState} profile={profile} />
     </>
   );
 }

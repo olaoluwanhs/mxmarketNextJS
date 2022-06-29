@@ -4,10 +4,13 @@ import Router from "next/router";
 import { useRef, useState, useEffect, useContext } from "react";
 import { LoggedInContext } from "../context/loggedInContext";
 import Navbar from "../components/navBar";
+import { uploadImage } from "../components/imageUpload";
 
 export default function AccountDetails({ user }) {
   //
   const loginForm = useRef();
+  const image = useRef();
+  const imageInput = useRef();
   const i = useRef(0);
   const { loggedInState, setLoggedInState } = useContext(LoggedInContext);
   const [attemptState, setAttemptState] = useState("none");
@@ -53,46 +56,65 @@ export default function AccountDetails({ user }) {
 
     return result;
   }
+  //
+  function handleProfileImage(e) {
+    //
+    // console.log(URL.createObjectURL(e.target.files[0]));
+    image.current.src = URL.createObjectURL(e.target.files[0]);
+    //
+  }
 
   //
   async function handleUpdate(e) {
     //
-    e.target.disabled = true;
-    //
-    let userCreateForm = new FormData(loginForm.current);
-    const updateImage = async () => {
+    try {
+      e.target.disabled = true;
       //
-      return "image name";
-    };
-    //
-    let userData = {
-      update: {
-        first_name: userCreateForm.get("firstname"),
-        last_name: userCreateForm.get("lastname"),
-        image: await updateImage(),
-        location: userCreateForm.get("location"),
-        phone_number: userCreateForm.get("phone-number"),
-        whatsapp: userCreateForm.get("whatsapp-number"),
-      },
-      passwordChange: "notAllowed",
-    };
-
-    //
-    const res = await fetch(`http://localhost:4000/user`, {
-      method: "put",
-      credentials: "include",
-      headers: {
-        "Content-Type": "Application/json",
-      },
-      body: JSON.stringify(userData),
-    });
-    const updatedObj = await res.json();
-    //
-    console.log(updatedObj);
-    e.target.disabled = false;
-    //
-    setAttemptState("Success");
-    Router.replace(`/profile/${updatedObj.user_name}`);
+      let userCreateForm = new FormData(loginForm.current);
+      //
+      let imageName = { name: profile.profile.image, message: "no upload yet" };
+      // console.log(profile.profile.image != image.current.currentSrc);
+      if (profile.profile.image != image.current.src) {
+        imageName = await uploadImage(imageInput.current.files[0]);
+      }
+      //
+      if (imageName.error) {
+        setAttemptState(imageName.error.message);
+        return;
+      }
+      //
+      let userData = {
+        update: {
+          first_name: userCreateForm.get("firstname"),
+          last_name: userCreateForm.get("lastname"),
+          image: imageName.name,
+          location: userCreateForm.get("location") || undefined,
+          phone_number: userCreateForm.get("phone-number"),
+          whatsapp: userCreateForm.get("whatsapp-number"),
+        },
+        passwordChange: "notAllowed",
+      };
+      // console.log(userData);
+      // //
+      const res = await fetch(`http://localhost:4000/user`, {
+        method: "put",
+        credentials: "include",
+        headers: {
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+      const updatedObj = await res.json();
+      //
+      // console.log(updatedObj);
+      e.target.disabled = false;
+      // //
+      setAttemptState("Success");
+      Router.replace(`/profile/${updatedObj.user_name}`);
+    } catch (error) {
+      console.log(error);
+      setAttemptState(error.message);
+    }
   }
   //
   return (
@@ -119,12 +141,45 @@ export default function AccountDetails({ user }) {
         {/*  */}
         <div className="d-flex container flex-column rounded py-3 align-items-center">
           <img src="/logo.png" alt="" className="form-logo" />
+
           {profile.profile && (
             <form
               className="d-flex flex-column my-5 col-10 shadow p-5 bg-light rounded"
               ref={loginForm}
             >
               <h3>Update user information</h3>
+              {/*  */}
+              <div
+                style={{
+                  width: "100px",
+                  height: "110px",
+                  position: "relative",
+                }}
+              >
+                {/* {JSON.stringify(profile)} */}
+                <img
+                  src={profile.profile.image || "/logo.png"}
+                  ref={image}
+                  alt=""
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                  }}
+                />
+                <input
+                  type={"file"}
+                  className={"form-control"}
+                  accept="image/*"
+                  name={"image"}
+                  style={{ height: "100%", width: "100%", opacity: 0 }}
+                  onChange={handleProfileImage}
+                  ref={imageInput}
+                />
+              </div>
+              <small>change profile image</small>
               {/*  */}
               <input
                 type="text"
