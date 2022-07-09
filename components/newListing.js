@@ -1,35 +1,48 @@
 import { Fragment, useContext, useEffect } from "react";
+import checkUser from "../context/checkUser";
+import { LoggedInContext } from "../context/loggedInContext";
 import { lisitingFormParams } from "../pages/profile/createListing";
 import ListingForm1 from "./listingForms/listingForm1";
 import ListingForm2 from "./listingForms/listingForm2";
 
-export default function NewListing(){
+export default function NewListing() {
+  let { listingPostObj, setListingPostObj, formState, setFormState } =
+    useContext(lisitingFormParams);
+  let ListingFormValues = useContext(lisitingFormParams);
+  let { loggedInState, setLoggedInState } = useContext(LoggedInContext);
+  //
 
-    let {listingPostObj, setListingPostObj, formState, setFormState} = useContext(lisitingFormParams);
-    // console.log(listingParams);
+  useEffect(() => {}, [formState]);
+  //
 
-    useEffect(()=>{
-    },[formState])
+  switch (formState) {
+    case 1:
+      return (
+        <ListingForm1
+          listingPostObj={listingPostObj}
+          setFormState={setFormState}
+          setListingPostObj={setListingPostObj}
+        />
+      );
+      break;
+    case 2:
+      return (
+        <ListingForm2
+          listingPostObj={listingPostObj}
+          setFormState={setFormState}
+          setListingPostObj={setListingPostObj}
+        />
+      );
+      break;
 
-    let ListingFormValues = useContext(lisitingFormParams)
-   
-
-                switch (formState) {
-                    case 1:
-                        return (
-                        <ListingForm1 listingPostObj={listingPostObj} setFormState={setFormState} setListingPostObj={setListingPostObj}/>
-                        )
-                        break;
-                        case 2:
-                            return (
-                                <ListingForm2  listingPostObj={listingPostObj} setFormState={setFormState} setListingPostObj={setListingPostObj}/>
-                                )
-                        break;
-                            
-                    default:
-                        return (
-                            <ListingForm1  listingPostObj={listingPostObj} setFormState={setFormState} setListingPostObj={setListingPostObj}/>
-                            )
-                        break;
-                }
+    default:
+      return (
+        <ListingForm1
+          listingPostObj={listingPostObj}
+          setFormState={setFormState}
+          setListingPostObj={setListingPostObj}
+        />
+      );
+      break;
+  }
 }

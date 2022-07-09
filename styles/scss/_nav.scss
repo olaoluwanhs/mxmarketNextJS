@@ -36,7 +36,7 @@ nav {
   position: absolute;
   top: -100vh;
   left: 0;
-  z-index: 1;
+  z-index: 3;
   transition: 0.5s;
   .nav-list {
     height: 100%;
@@ -86,7 +86,7 @@ nav {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  z-index: 2;
+  z-index: 4;
 }
 
 // Media queries
@@ -100,4 +100,9 @@ nav {
   .sm-nav {
     display: flex;
   }
+}
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
